@@ -82,7 +82,6 @@ module.exports = function(Needhelp) {
       },
       limit: 50,
     }, (err, needers) => {
-
       let requests = needers.map((needers) => {
         return new Promise((resolve) => {
           Needhelp.matching(needers.id, maxDistance, (err, results) => {
@@ -99,7 +98,7 @@ module.exports = function(Needhelp) {
     });
   };
 
-  Needhelp.sendMatching = function (needHelp_id, helper_id, cb) {
+  Needhelp.sendMatching = function(needHelp_id, helper_id, cb) {
     Needhelp.findOne({
       where: {
         id: needHelp_id,
@@ -117,12 +116,12 @@ module.exports = function(Needhelp) {
         }));
 
         loopback.Email.send({
-            from: process.env.MAILJET_FROM,
-            to: needer.email,
-            subject: `${needer.prenom} ${needer.nom}, nous avons trouvé un matching !`,
-            text: `La plateforme vient de vous trouver de l\'aide. Vous pouvez contacter ${helper.prenom} ${helper.nom}, il est à ${distanceInMeters} mètres de vous. Vous pouvez le contacter à l'adresse suivante : ${helper.email}`,
-            html: `<div><p>La plateforme vient de vous trouver de l'aide.</p><p>Vous pouvez contacter ${helper.prenom} ${helper.nom}, il est à ${distanceInMeters} mètres de vous.</p><p>Vous pouvez le contacter à <a href="mailto:${helper.email}">l'adresse suivante.</a></p></div>`,
-          })
+          from: process.env.MAILJET_FROM,
+          to: needer.email,
+          subject: `${needer.prenom} ${needer.nom}, nous avons trouvé un matching !`,
+          text: `La plateforme vient de vous trouver de l\'aide. Vous pouvez contacter ${helper.prenom} ${helper.nom}, il est à ${distanceInMeters} mètres de vous. Vous pouvez le contacter à l'adresse suivante : ${helper.email}`,
+          html: `<div><p>La plateforme vient de vous trouver de l'aide.</p><p>Vous pouvez contacter ${helper.prenom} ${helper.nom}, il est à ${distanceInMeters} mètres de vous.</p><p>Vous pouvez le contacter à <a href="mailto:${helper.email}">l'adresse suivante.</a></p></div>`,
+        })
           .then(result => {
             needer.helper_id = helper.id;
             Needhelp.upsert(needer, ()=>{});
@@ -130,7 +129,6 @@ module.exports = function(Needhelp) {
           })
           .catch(error => cb(error));
       });
-
     });
   };
 

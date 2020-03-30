@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = function (Helper) {
+module.exports = function(Helper) {
 
 };
